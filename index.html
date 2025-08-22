@@ -246,12 +246,8 @@
                     <a href="#" id="ios-link" class="download-btn" title="Download from App Store">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
                     </a>
-                </div>
+                </div>                
                 
-                <div style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
-                    <em>आपल्या आरोग्याची काळजी घेण्यासाठी आज डाउनलोड करा</em><br>
-                    <em>Download today to take care of your health</em>
-                </div>
             </div>
             
             <div class="footer-info">
@@ -284,12 +280,12 @@
             iosLinkElement.href = IOS_URL;
             
             if (device.isAndroid) {
-                loadingElement.innerHTML = '🤖 Redirecting to Google Play Store...<br><span style="font-size: 0.9em; opacity: 0.8;">Google Play Store वर पाठवत आहे...</span>';
+                loadingElement.innerHTML = 'Redirecting to Google Play Store...<br><span style="font-size: 0.9em; opacity: 0.8;">Google Play Store वर पाठवत आहे...</span>';
                 setTimeout(() => {
                     window.location.href = ANDROID_URL;
                 }, 2000);
             } else if (device.isIOS) {
-                loadingElement.innerHTML = '🍎 Redirecting to App Store...<br><span style="font-size: 0.9em; opacity: 0.8;">App Store वर पाठवत आहे...</span>';
+                loadingElement.innerHTML = 'Redirecting to App Store...<br><span style="font-size: 0.9em; opacity: 0.8;">App Store वर पाठवत आहे...</span>';
                 setTimeout(() => {
                     window.location.href = IOS_URL;
                 }, 2000);
