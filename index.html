@@ -3,102 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Lifenity Patient App</title>
+    <title>Lifenity Patient App - Download Now</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
         
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 400px;
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .main-container {
+            position: relative;
+            z-index: 2;
             width: 100%;
+            max-width: 600px;
         }
         
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            font-weight: 300;
+        .app-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1),
+                        0 0 0 1px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
         }
         
-        p {
-            margin-bottom: 30px;
+        .app-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .logo-container {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 70px;
+            width: auto;
+            max-width: 320px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+        
+        .app-title {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .app-subtitle {
+            font-size: 1.4em;
+            margin-bottom: 35px;
+            opacity: 0.95;
+            font-weight: 500;
+            color: #f8fafc;
+            line-height: 1.4;
+        }
+        
+        .loading-section {
+            margin: 30px 0;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .loading {
+            font-size: 1.3em;
+            font-weight: 500;
+            color: #fbbf24;
+        }
+        
+        .download-section {
+            margin-top: 40px;
+        }
+        
+        .download-description {
             font-size: 1.1em;
+            margin-bottom: 25px;
             opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
         
         .download-btn {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 15px 25px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1em;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-            margin: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: perspective(1000px) rotateX(0deg);
         }
         
         .download-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: perspective(1000px) rotateX(-2deg) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 1);
         }
         
-        .loading {
-            font-size: 1.2em;
-            margin-top: 20px;
+        .download-btn img {
+            height: 50px;
+            width: auto;
+            display: block;
         }
         
-        .manual-links {
-            margin-top: 30px;
-            padding-top: 20px;
+        .footer-info {
+            margin-top: 40px;
+            padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.95em;
+            opacity: 0.85;
+            line-height: 1.6;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
         }
         
         @keyframes pulse {
-            0% { opacity: 0.6; }
+            0% { opacity: 0.7; }
             50% { opacity: 1; }
-            100% { opacity: 0.6; }
+            100% { opacity: 0.7; }
         }
         
         .loading {
-            animation: pulse 1.5s infinite;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .logo-container {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @media (max-width: 480px) {
+            .app-card {
+                padding: 40px 25px;
+                margin: 10px;
+            }
+            
+            .app-title {
+                font-size: 2.2em;
+            }
+            
+            .app-subtitle {
+                font-size: 1.2em;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .footer-info {
+                font-size: 0.9em;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📱 Download Our App</h1>
-        <p id="status">Detecting your device...</p>
-        <div class="loading" id="loading">⏳ Redirecting...</div>
-        
-        <div class="manual-links" id="manual-links" style="display: none;">
-            <p>Or choose your platform:</p>
-            <a href="#" id="android-link" class="download-btn">📱 Android (Google Play)</a>
-            <a href="#" id="ios-link" class="download-btn">🍎 iOS (App Store)</a>
+    <div class="main-container">
+        <div class="app-card">
+            <div class="logo-container">
+                <img src="https://lifenity.com/assets/img/logo.png" alt="Lifenity Logo" class="logo">
+            </div>
+            
+            <h1 class="app-title">Lifenity Patient App</h1>
+            <div class="app-subtitle">
+                Welcome to Lifenity Patient App<br>
+                <span style="font-size: 0.9em;">लाइफनिटी पेशंट अ‍ॅप मध्ये तुमचे स्वागत आहे</span>
+            </div>
+            
+            <div class="loading-section">
+                <div class="loading" id="loading">⏳ Redirecting to your app store...</div>
+            </div>
+            
+            <div class="download-section" id="manual-links" style="display: none;">
+                <div class="download-description">
+                    <strong>Download the app now</strong><br>
+                    <span style="font-size: 0.95em; opacity: 0.8;">अ‍ॅप डाउनलोड करा</span>
+                </div>
+                
+                <div class="download-buttons">
+                    <a href="#" id="android-link" class="download-btn" title="Download from Google Play Store">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                    </a>
+                    <a href="#" id="ios-link" class="download-btn" title="Download from App Store">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                    </a>
+                </div>
+                
+                <div style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                    <em>आपल्या आरोग्याची काळजी घेण्यासाठी आज डाउनलोड करा</em><br>
+                    <em>Download today to take care of your health</em>
+                </div>
+            </div>
+            
+            <div class="footer-info">
+                लाइफनिटी ही भारतभरातील आघाडीची, निदान व आरोग्य सेवा क्षेत्रातील संस्था, जागतिक पातळी वर कार्यरत आहे. भारताव्यतिरिक्त अन्य ६ देशांमध्ये कार्यरत आहे. बृहन्मुंबई महानगरपालिकेच्या 'आपली चिकित्सा' योजनेसाठी लोअर परळ येथील लाइफनिटीची प्रयोगशाळा ही मुख्य प्रयोगशाळा म्हणून कार्यरत असणार आहे.
+            </div>
         </div>
     </div>
 
     <script>
-        // add our links here 🈁
+        // App store URLs
         const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.lifenityhealth.connect';
         const IOS_URL = 'https://apps.apple.com/in/app/lifenity-connect/id6749895597';
         
@@ -111,7 +274,6 @@
         }
         
         function updateUI(device) {
-            const statusElement = document.getElementById('status');
             const loadingElement = document.getElementById('loading');
             const manualLinksElement = document.getElementById('manual-links');
             const androidLinkElement = document.getElementById('android-link');
@@ -122,19 +284,16 @@
             iosLinkElement.href = IOS_URL;
             
             if (device.isAndroid) {
-                statusElement.textContent = 'Android device detected!';
-                loadingElement.textContent = '🤖 Redirecting to Google Play Store...';
+                loadingElement.innerHTML = '🤖 Redirecting to Google Play Store...<br><span style="font-size: 0.9em; opacity: 0.8;">Google Play Store वर पाठवत आहे...</span>';
                 setTimeout(() => {
                     window.location.href = ANDROID_URL;
                 }, 2000);
             } else if (device.isIOS) {
-                statusElement.textContent = 'iOS device detected!';
-                loadingElement.textContent = '🍎 Redirecting to App Store...';
+                loadingElement.innerHTML = '🍎 Redirecting to App Store...<br><span style="font-size: 0.9em; opacity: 0.8;">App Store वर पाठवत आहे...</span>';
                 setTimeout(() => {
                     window.location.href = IOS_URL;
                 }, 2000);
             } else {
-                statusElement.textContent = 'Desktop or other device detected';
                 loadingElement.style.display = 'none';
                 manualLinksElement.style.display = 'block';
             }
