@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Our App</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        p {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .loading {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        .manual-links {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Download Our App</h1>
+        <p id="status">Detecting your device...</p>
+        <div class="loading" id="loading">⏳ Redirecting...</div>
+        
+        <div class="manual-links" id="manual-links" style="display: none;">
+            <p>Or choose your platform:</p>
+            <a href="#" id="android-link" class="download-btn">📱 Android (Google Play)</a>
+            <a href="#" id="ios-link" class="download-btn">🍎 iOS (App Store)</a>
+        </div>
+    </div>
+
+    <script>
+        // Replace these URLs with your actual app store links
+        const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.mahalabseva.nhm';
+        const IOS_URL = 'https://apps.apple.com/in/app/reddit/id1064216828';
+        
+        function detectDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isAndroid = /android/.test(userAgent);
+            const isIOS = /iphone|ipad|ipod/.test(userAgent);
+            
+            return { isAndroid, isIOS };
+        }
+        
+        function updateUI(device) {
+            const statusElement = document.getElementById('status');
+            const loadingElement = document.getElementById('loading');
+            const manualLinksElement = document.getElementById('manual-links');
+            const androidLinkElement = document.getElementById('android-link');
+            const iosLinkElement = document.getElementById('ios-link');
+            
+            // Set the actual URLs
+            androidLinkElement.href = ANDROID_URL;
+            iosLinkElement.href = IOS_URL;
+            
+            if (device.isAndroid) {
+                statusElement.textContent = 'Android device detected!';
+                loadingElement.textContent = '🤖 Redirecting to Google Play Store...';
+                setTimeout(() => {
+                    window.location.href = ANDROID_URL;
+                }, 2000);
+            } else if (device.isIOS) {
+                statusElement.textContent = 'iOS device detected!';
+                loadingElement.textContent = '🍎 Redirecting to App Store...';
+                setTimeout(() => {
+                    window.location.href = IOS_URL;
+                }, 2000);
+            } else {
+                statusElement.textContent = 'Desktop or other device detected';
+                loadingElement.style.display = 'none';
+                manualLinksElement.style.display = 'block';
+            }
+        }
+        
+        // Run detection when page loads
+        window.addEventListener('load', () => {
+            const device = detectDevice();
+            updateUI(device);
+        });
+        
+        // Fallback: Show manual links after 5 seconds if redirect fails
+        setTimeout(() => {
+            document.getElementById('manual-links').style.display = 'block';
+        }, 5000);
+    </script>
+</body>
+</html>
